@@ -1,0 +1,55 @@
+{    
+   "roomsItem" : [  
+        {
+            "pk": 1, 
+            "address": "서울 성동구 왕십리로 125",
+            "detailAddress": "KD타워 101호",
+            "realEstate": "APARTMENT",
+            "realEstatePriceType": "JEONSE",
+            "depositAmount": 200000000,
+            "rentAmount": 0,
+            "maintenanceFee": 100000,
+            "maintenanceFeeItems": ["ELECTRIC"],
+            "floor": "1",
+            "sunlightDirection": "NORTH",
+            "leasableArea": 119.00,
+            "pet": true,
+            "thumbnail": "https://static.zaritalk.com/images/img-default-thumbnail@2x.png",
+            "canceled": false
+        },
+        {
+            "pk": 2,
+            "address": "서울 성동구 왕십리로 125",
+            "detailAddress": "KD타워 반지하",
+            "realEstate": "SEMI_BASEMENT",
+            "realEstatePriceType": "SELLING",
+            "depositAmount": 500000000,
+            "rentAmount": 0,
+            "maintenanceFee": 0,
+            "maintenanceFeeItems": [],
+            "floor": "1",
+            "sunlightDirection": "SOUTH",
+            "leasableArea": 33.05,
+            "pet": false,
+            "thumbnail": "https://static.zaritalk.com/images/img-default-thumbnail@2x.png",
+            "canceled": false
+        },
+        {
+            "pk": 3,
+            "address": "서울 성동구 왕십리로 125",
+            "detailAddress": "KD타워 710호",
+            "realEstate": "EFFICIENCY_APARTMENT",
+            "realEstatePriceType": "MONTHLY",
+            "depositAmount": 200000000,
+            "rentAmount": 1000000,
+            "maintenanceFee": 50000,
+            "maintenanceFeeItems": ["ELECTRIC", "WATERWORKS"],
+            "floor": "7",
+            "sunlightDirection": "SOUTH_EAST",
+            "leasableArea": 231.40,
+            "pet": false,
+            "thumbnail": "https://static.zaritalk.com/images/img-default-thumbnail@2x.png",
+            "canceled": true
+        }
+    ]
+}
