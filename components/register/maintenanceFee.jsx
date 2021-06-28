@@ -2,7 +2,6 @@ import React from 'react';
 import { MaintenanceFee, MaintenanceFeeItems } from './styles';
 
 const MaintenanceFeeBox = ({ realEstatePriceType, maintenanceFee, maintenanceFeeItems, onChangeFormInput, onChangeMaintenanceFeeItems }) => {
-    console.log(maintenanceFeeItems);
     return (
         <>
         {

@@ -8,7 +8,7 @@ const FloorAndSunlight = ({ onChangeFormInput, floor, sunlightDirection }) => {
                 <h2>층수 (택1)</h2>
                 <FloorAndSunlightBox>
                     <div>
-                        <input type="radio" id="floor" name="floor" value="FLOOR" onChange={onChangeFormInput} checked={floor === 'FLOOR'} />
+                        <input type="radio" id="floor" name="floor" value="FLOOR" onChange={onChangeFormInput} checked={floor === 'FLOOR' || typeof(Number(floor)) === 'number' } />
                         <label htmlFor="floor">1층 ~ 80층</label>
                     </div>
                     <div>

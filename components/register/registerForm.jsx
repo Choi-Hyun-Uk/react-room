@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DaumPostcode from 'react-daum-postcode';
 import Router from 'next/router';
-import { dataPostSave, deleteSaveData } from '../../actions/register';
+import { dataPostSave, deleteSaveData, dataPatch } from '../../actions/register';
 
 import Address from './address';
 import RealEstate from './realEstate';
@@ -15,16 +15,17 @@ import SaveDataModal from '../../modal/saveDataModal';
 
 import { FormWrapper, AcreagesBox, PetCheckbox, SubmitButton } from './styles';
 
-const RegisterForm = ({ isSaveData }) => {
+const RegisterForm = ({ isSaveData, isUpdate }) => {
     const dispatch = useDispatch();
-    const data = useSelector((state) => state.register.registerSaveData)[0]; // 임시 저장 데이터
+    const data = useSelector((state) => state.register.registerSaveData); // 임시 저장 데이터
+    const { roomItem } = useSelector((state) => state.register); // 수정 시 데이터
     const [ modalIsOpen, setModalIsOpen] = useState(false); // 모달창 여부
-    const [ saveDataModalIsOpen, setSaveDataModalIsOpen ] = useState(isSaveData); // 임시 저장 데이터 여부
+    const [ saveDataModalIsOpen, setSaveDataModalIsOpen ] = useState(isUpdate ? false : isSaveData); // 임시 저장 데이터 여부
     const [ onPostcode, setOnPostcode ] = useState(false); // true 시 다음 카카오 우편주소 입력창 띄우기
     const checkInputRef = useRef(null);
     const inputRef = useRef(null); 
     const postcodeRef = useRef(null);
-
+    
     const [ formInput, setFormInput ] = useState({ // Form 상태 값
         address: '',
         detailAddress: '',
@@ -167,19 +168,19 @@ const RegisterForm = ({ isSaveData }) => {
     const onClickSaveDatawWrite = useCallback(() => {
         setSaveDataModalIsOpen(false);
         setFormInput({
-            address: data.address,
-            detailAddress: data.detailAddress,
-            realEstate: data.realEstate,
-            realEstatePriceType: data.realEstatePriceType,
-            maintenanceFee: data.maintenanceFee,
-            maintenanceFeeItems: data.maintenanceFeeItems,
-            depositAmount: data.depositAmount,
-            rentAmount: data.rentAmount,
-            floor: data.floor,
-            sunlightDirection: data.sunlightDirection,
-            leasableArea1: data.leasableArea1,
-            leasableArea2: data.leasableArea2,
-            pet: data.pet,
+            address: data[0].address,
+            detailAddress: data[0].detailAddress,
+            realEstate: data[0].realEstate,
+            realEstatePriceType: data[0].realEstatePriceType,
+            maintenanceFee: data[0].maintenanceFee,
+            maintenanceFeeItems: data[0].maintenanceFeeItems,
+            depositAmount: data[0].depositAmount,
+            rentAmount: data[0].rentAmount,
+            floor: data[0].floor,
+            sunlightDirection: data[0].sunlightDirection,
+            leasableArea1: data[0].leasableArea1,
+            leasableArea2: data[0].leasableArea2,
+            pet: data[0].pet,
         });
     }, [formInput]);
 
@@ -187,6 +188,12 @@ const RegisterForm = ({ isSaveData }) => {
     const onSubmitForm = useCallback((e) => {
         e.preventDefault();
         setModalIsOpen(true);
+        if (isUpdate) {
+            dispatch(dataPatch({
+                id: roomItem.id,
+                content: { canceled: !roomItem.canceled }
+            }));
+        }
     }, [formInput]);
 
     // 임시 저장 시
@@ -199,9 +206,25 @@ const RegisterForm = ({ isSaveData }) => {
         }));
     }, [formInput, leasableArea2]);
 
-    // 다음 주소 찾기 팝업 창 외부 클릭 시 Off
     useEffect(() => {
-        document.addEventListener('click', onClickOutSide);
+        document.addEventListener('click', onClickOutSide); // 다음 주소 찾기 팝업 창 외부 클릭 시 Off
+        if (isUpdate) { // 수정 경로 유입 시
+            setFormInput({
+                address: roomItem.address,
+                detailAddress: roomItem.detailAddress,
+                realEstate: roomItem.realEstate,
+                realEstatePriceType: roomItem.realEstatePriceType,
+                maintenanceFee: roomItem.maintenanceFee,
+                maintenanceFeeItems: roomItem.maintenanceFeeItems,
+                depositAmount: roomItem.depositAmount,
+                rentAmount: roomItem.rentAmount,
+                floor: roomItem.floor,
+                sunlightDirection: roomItem.sunlightDirection,
+                leasableArea1: Math.floor(roomItem.leasableArea / 3.31),
+                leasableArea2: roomItem.leasableArea,
+                pet: roomItem.pet
+            });
+        }
         return () => {
             document.removeEventListener('click', onClickOutSide);
         }
@@ -209,7 +232,7 @@ const RegisterForm = ({ isSaveData }) => {
 
     return (
         <FormWrapper>
-            <SuccessModal modalIsOpen={modalIsOpen} onClickCheckBtn={onClickCheckBtn} text="매물 등록 완료!" />
+            <SuccessModal modalIsOpen={modalIsOpen} onClickCheckBtn={onClickCheckBtn} text={isUpdate ? '수정 완료 되었습니다!' : '방 등록 완료 되었습니다!'} />
             <SaveDataModal saveDataModalIsOpen={saveDataModalIsOpen} onClickNewWrite={onClickNewWrite} onClickSaveDatawWrite={onClickSaveDatawWrite} />
             { onPostcode && <DaumPostcode style={{ marginBottom: '2rem'}} ref={postcodeRef} onComplete={handleComplete} /> }
             <form onSubmit={onSubmitForm}>
@@ -271,9 +294,9 @@ const RegisterForm = ({ isSaveData }) => {
                                 type="radio"
                                 id="possible"
                                 name="pet"
-                                value="POSSIBLE"
+                                value={true}
                                 onChange={onChangeFormInput}
-                                checked={pet === 'POSSIBLE'}
+                                checked={pet}
                             />
                             <label htmlFor="possible">가능</label>
                         </div>
@@ -282,9 +305,9 @@ const RegisterForm = ({ isSaveData }) => {
                                 type="radio"
                                 id="impossible"
                                 name="pet"
-                                value="IMPOSSIBLE"
+                                value={false}
                                 onChange={onChangeFormInput}
-                                checked={pet === 'IMPOSSIBLE'}
+                                checked={pet}
                             />
                             <label htmlFor="impossible">불가능</label>
                         </div>
@@ -293,7 +316,7 @@ const RegisterForm = ({ isSaveData }) => {
                 </ul>
                 <SubmitButton>
                     <button className="save-btn" type="button" onClick={onClickDataSave}>임시저장</button>
-                    <button type="submit">등록완료</button>
+                    {isUpdate ? <button type="submit">수정완료</button> : <button type="submit">등록완료</button>}
                 </SubmitButton>
             </form>
         </FormWrapper>
