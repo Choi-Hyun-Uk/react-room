@@ -1,18 +1,20 @@
 import React from 'react';
+import { ButtonBox } from './styles';
 import Link from 'next/link';
-import { RegisterLinkButton } from './styles';
 
 const FloatingButton = ({ item, onClickRoomUpdate }) => {
-    console.log(item.canceled);
     return (
-        <RegisterLinkButton>
-            <Link href="/room/register">
-                <a>방등록</a>
+        <ButtonBox>
+            <Link href={{
+                pathname: '/room/register/',
+                query: { id: item.id }
+            }}>
+                <a>수정하기</a>
             </Link>
             <button onClick={() => onClickRoomUpdate(item.canceled ? false : true)}>
                 {item.canceled ? '내리기' : '올리기'}
             </button>
-        </RegisterLinkButton>
+        </ButtonBox>
     )
 }
 

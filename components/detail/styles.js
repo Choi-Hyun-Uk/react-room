@@ -87,7 +87,7 @@ export const DetailBottom = styled.div`
     }
 `
 
-export const RegisterLinkButton = styled.div`
+export const ButtonBox = styled.div`
     position: fixed;
     display: flex;
     left: 50%;

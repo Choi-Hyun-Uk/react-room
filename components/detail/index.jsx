@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 
@@ -6,12 +6,17 @@ import { DetailWrapper, DetailTop, DetailBottom } from './styles';
 import FloatingButton from './floatingBtn';
 import { dataPatch } from '../../actions/register';
 import SuccessModal from '../../modal/successModal';
+import useAmount from '../../hook/useAmount';
 
 const RoomDetail = () => {
     const item = useSelector((state) => state.register.roomItem);
     const { isLoading } = useSelector((state) => state.register);
     const [ done, setDone ] = useState(false);
     const dispatch = useDispatch();
+
+    const depositAmount = useAmount('depositAmount', item);
+    const rentAmount = useAmount('rentAmount', item);
+    const maintenanceFee = useAmount('maintenanceFee', item);
 
     // boolean 파라미터로 Room canceled 상태 올리기 또는 내리기
     const onClickRoomUpdate = useCallback((boolean)=> {
@@ -27,7 +32,7 @@ const RoomDetail = () => {
     // Modal 확인 버튼
     const onClickCheckBtn = useCallback(() => {
         setDone(false);
-        Router.replace('/');
+        Router.replace('/rooms');
     }, [done]);
 
     return (
@@ -39,8 +44,8 @@ const RoomDetail = () => {
                     <h1 className={item.realEstatePriceType.toLowerCase()}>{item.realEstatePriceType}</h1>
                     {
                         item.realEstatePriceType !== 'MONTHLY'
-                        ? <h2>{item.depositAmount}</h2>
-                        : <h2>{item.depositAmount}/{item.rentAmount}</h2>
+                        ? <h2>{depositAmount}</h2>
+                        : <h2>{depositAmount}/{rentAmount}</h2>
                     }
                     <div className="item-address">
                         <p>{item.address}</p>
@@ -54,16 +59,16 @@ const RoomDetail = () => {
                     <li><div className="category">매물종류</div><div className="category-info">{item.realEstate}</div></li>
                     <li><div className="category">가격종류</div><div className="category-info">{item.realEstatePriceType}</div></li>
                     { item.realEstatePriceType !== 'MONTHLY'
-                    ? <li><div className="category">매매가</div><div className="category-info">{item.depositAmount}</div></li>
+                    ? <li><div className="category">매매가</div><div className="category-info">{depositAmount}</div></li>
                     : (
                     <>
-                        <li><div className="category">보증금</div><div className="category-info">{item.depositAmount}</div></li>
-                        <li><div className="category">임대료</div><div className="category-info">{item.rentAmount}</div></li>
+                        <li><div className="category">보증금</div><div className="category-info">{depositAmount}</div></li>
+                        <li><div className="category">임대료</div><div className="category-info">{rentAmount}만원</div></li>
                     </>
                     )}
                     <li>
                         <div className="category">관리비</div>
-                        <div className="category-info">{item.maintenanceFee}</div>
+                        <div className="category-info">{maintenanceFee ? `${maintenanceFee}만원` : '-'}</div>
                         </li>
                     <li>
                         <div className="category">관리항목</div>
