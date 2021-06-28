@@ -1,49 +1,14 @@
-import React, { useState, useCallback } from 'react';
-import wrapper from '../store/configureStore';
-
-import RoomsList from '../components/roomsList';
-import { RoomsListWrapper } from '../styles';
-import ModeMenu from '../components/roomsList/modeMenu';
-import { dataGetItems } from '../actions/register';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import Link from 'next/link';
+import { MainPageWrapper } from '../styles';
 
 const Home = () => {
-    const { roomsList } = useSelector((state) => state.register);
-
-    // 올린방, 내린방 상태
-    const [mode, setMode] = useState(false);
-
-    const onClickUpRoom = useCallback(() => {
-        setMode(false)
-    }, [mode]);
-
-    const onClickDownRoom = useCallback(() => {
-        setMode(true)
-    }, [mode]);
-
     return (
-        <>
-            <RoomsListWrapper>
-                <ModeMenu
-                    mode={mode}
-                    onClickUpRoom={onClickUpRoom}
-                    onClickDownRoom={onClickDownRoom}
-                />
-                <ul>
-                    {roomsList?.map((item) => (
-                        <RoomsList key={item.pk} item={item} mode={mode} />
-                    ))}
-                </ul>
-            </RoomsListWrapper>
-        </>
+        <MainPageWrapper>
+            <Link href="/rooms"><a>방 목록 페이지</a></Link>
+            <Link href="/room/register"><a>방 등록 페이지</a></Link>
+        </MainPageWrapper>
     )
 }
-
-export const getStaticProps = wrapper.getStaticProps((context) => async () => {
-    await context.dispatch(dataGetItems());
-    return {
-        props: {}
-    }
-});
 
 export default Home;
