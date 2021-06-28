@@ -1,10 +1,15 @@
 import React, { useState, useCallback } from 'react';
+import wrapper from '../store/configureStore';
+
 import RoomsList from '../components/roomsList';
-import { roomItems } from '../data/rooms';
 import { RoomsListWrapper } from '../styles';
 import ModeMenu from '../components/roomsList/modeMenu';
+import { dataGetItems } from '../actions/register';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+    const { roomsList } = useSelector((state) => state.register);
+
     // 올린방, 내린방 상태
     const [mode, setMode] = useState(false);
 
@@ -25,7 +30,7 @@ const Home = () => {
                     onClickDownRoom={onClickDownRoom}
                 />
                 <ul>
-                    {roomItems.map((item) => (
+                    {roomsList?.map((item) => (
                         <RoomsList key={item.pk} item={item} mode={mode} />
                     ))}
                 </ul>
@@ -33,5 +38,12 @@ const Home = () => {
         </>
     )
 }
+
+export const getStaticProps = wrapper.getStaticProps((context) => async () => {
+    await context.dispatch(dataGetItems());
+    return {
+        props: {}
+    }
+});
 
 export default Home;

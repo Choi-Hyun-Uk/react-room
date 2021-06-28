@@ -1,28 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { DetailTop, DetailBottom } from './styles';
+import React, { useCallback, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Router from 'next/router';
 
-const RoomDetail = ({ id }) => {
-    const [item, setItem] = useState();
-    const [loading, setLoading] = useState(true);
+import { DetailWrapper, DetailTop, DetailBottom } from './styles';
+import FloatingButton from './floatingBtn';
+import { dataPatch } from '../../actions/register';
+import SuccessModal from '../../modal/successModal';
 
-    useEffect(() => {
-        const roomItem = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3001/roomsItem?pk=${id}`);
-                setItem(response.data[0]);
-                setLoading(false);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        if (id && id > 0) roomItem();
-    }, [id]);
+const RoomDetail = () => {
+    const item = useSelector((state) => state.register.roomItem);
+    const { isLoading } = useSelector((state) => state.register);
+    const [ done, setDone ] = useState(false);
+    const dispatch = useDispatch();
 
-    if (loading) return null;
+    // boolean 파라미터로 Room canceled 상태 올리기 또는 내리기
+    const onClickRoomUpdate = useCallback((boolean)=> {
+        dispatch(dataPatch({
+            id: item.id,
+            content: { canceled: boolean },
+        }));
+        setDone(true);
+    }, [item, done]);
+
+    if (isLoading) return null;
+
+    // Modal 확인 버튼
+    const onClickCheckBtn = useCallback(() => {
+        setDone(false);
+        Router.replace('/');
+    }, [done]);
 
     return (
-        <>
+        <DetailWrapper>
+            <SuccessModal modalIsOpen={done} text='업데이트 완료했습니다!' onClickCheckBtn={onClickCheckBtn} />
             <DetailTop>
                 <div className="item-thumbnail"><img src={item.thumbnail} alt={`${item.address}+${item.detailAddress}`} /></div>
                 <div className="item-priceType">
@@ -83,7 +93,8 @@ const RoomDetail = ({ id }) => {
                     </li>
                 </ul>
             </DetailBottom>
-        </>
+            <FloatingButton item={item} onClickRoomUpdate={onClickRoomUpdate} />
+        </DetailWrapper>
     )
 }
 

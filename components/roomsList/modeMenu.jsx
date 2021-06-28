@@ -5,8 +5,8 @@ const ModeMenu = ({ mode, onClickDownRoom, onClickUpRoom }) => {
     
     return (
         <RoomModeMenu>
-            <button className={mode ? '' : 'active'} onClick={onClickUpRoom}>올린 방</button>
-            <button className={mode ? 'active' : ''} onClick={onClickDownRoom}>내린 방</button>
+            <button className={mode ? 'active' : ''} onClick={onClickDownRoom}>올린방</button>
+            <button className={mode ? '' : 'active'} onClick={onClickUpRoom}>내린방</button>
         </RoomModeMenu>
     )
 }

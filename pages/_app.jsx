@@ -1,9 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
 import GlobalStyle from '../globalStyles';
-// import { wrapper } from '../store/configureStore';
+import wrapper from '../store/configureStore';
 
-const App = ({ Component, pageProps}) => {
+const App = ({ Component, pageProps }) => {
     return (
         <>
             <Head>
@@ -16,4 +16,4 @@ const App = ({ Component, pageProps}) => {
     )
 }
 
-export default App;
+export default wrapper.withRedux(App);

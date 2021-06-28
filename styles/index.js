@@ -11,25 +11,6 @@ export const RoomsListWrapper = styled.div`
     }
 `
 
-export const DetailPageWrapper = styled.div`
-    position: relative;
-    margin: 4rem auto 0 auto;
-    padding-bottom: 4rem;
-    max-width: 780px;
-
-    & .room-register-btn {
-        margin-top: 4rem;
-        text-align: center;
-        & a {
-            display: inline-block;
-            padding: 0.5rem 1.25rem;
-            background-color: #4263eb;
-            border-radius: 0.25rem;
-            color: white;
-        }
-    }
-`
-
 export const RegisterWrapper = styled.div`
     position: relative;
     max-width: 780px;

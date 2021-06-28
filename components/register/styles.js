@@ -25,7 +25,7 @@ export const FormWrapper = styled.div`
     }
 `
 // 매매종류
-export const SellTypeRadioBox = styled.div`
+export const RealEstateBox = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -49,7 +49,7 @@ export const SellTypeRadioBox = styled.div`
     }
 `
 // 가격종류
-export const PriceTypeRadioBtnBox = styled.div`
+export const RealEstatePriceTypeBox = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -73,7 +73,7 @@ export const PriceTypeRadioBtnBox = styled.div`
     }
 `
 // 가격정보
-export const AmountInfoBox = styled.div`
+export const DepositAmountBox = styled.div`
     & div {
         display: flex;
         flex-direction: row;
@@ -95,7 +95,7 @@ export const AmountInfoBox = styled.div`
     }
 `
 // 관리비
-export const AdminExpense = styled.li`
+export const MaintenanceFee = styled.li`
     & div {
         display: flex;
         flex-direction: row;
@@ -113,7 +113,7 @@ export const AdminExpense = styled.li`
     }
 `
 // 관리비용 선택
-export const AdminExpenseCheckBox = styled.li`
+export const MaintenanceFeeItems = styled.li`
     display: flex;
     flex-direction: column;
     & .checkbox {
@@ -143,7 +143,7 @@ export const AdminExpenseCheckBox = styled.li`
     }
 `
 // 층수, 방향
-export const FloorViewCheckbox = styled.div`
+export const FloorAndSunlightBox = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -219,10 +219,16 @@ export const SubmitButton = styled.div`
     border-top: 2px solid #222;
     text-align: center;
     & button {
-        background-color: #12b886;
+        background-color: #4263eb;
         color: white;
         border-radius: 0.25rem;
+        margin: 0 1rem;
         padding: 1rem 1.75rem;
         cursor: pointer;
+    }
+    & .save-btn {
+        border: 1px solid #4263eb;
+        background-color: white;
+        color: #4263eb;
     }
 `

@@ -1,14 +1,21 @@
 import { HYDRATE } from 'next-redux-wrapper';
-import roomSlice from './roomSlice';
+import { combineReducers } from 'redux';
+import registerSlice from './registerSlice';
 
-export const reducer = (state, action) => {
-    if (action.type === HYDRATE) {
+const rootReducer = (state, action) => {
+  switch (action.type) {
+    case HYDRATE:
       return {
         ...state,
         ...action.payload,
-      };
+      }
+    default: {
+      const combinedReducer = combineReducers({
+        register: registerSlice.reducer,
+      });
+      return combinedReducer(state, action);
     }
-    return combineReducers({
-      [roomSlice.name]: roomSlice.reducer,
-    })(state, action);
+  }
 };
+
+export default rootReducer;

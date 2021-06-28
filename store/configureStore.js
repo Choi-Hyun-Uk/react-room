@@ -1,13 +1,22 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
+import rootReducer from '../slices'
 
-const makeStore = () => {
-    configureStore({
+const reducer = rootReducer;
+const middleware = getDefaultMiddleware();
+
+const makeStore = (context) => {
+    const store = configureStore({
         reducer,
-        middleware: [...getDefaultMiddleware()]
+        middleware,
+        devTools: true,
     });
+    return store;
 }
 
-export const wrapper = createWrapper(makeStore, {
-    debug: process.env.NODE_ENV !== "production",
+const wrapper = createWrapper(makeStore, {
+    debug: true,
 });
+
+export default wrapper;
+
