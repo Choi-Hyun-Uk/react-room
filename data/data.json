@@ -60,29 +60,5 @@
       "id": 3
     }
   ],
-  "saveRegisterData": [
-    {
-      "address": "인천 계양구 봉오대로691번길 4 (작전동, 코오롱아파트)",
-      "detailAddress": "102동 901호",
-      "realEstate": "ONE_ROOM",
-      "realEstatePriceType": "MONTHLY",
-      "maintenanceFee": "1500000",
-      "maintenanceFeeItems": [
-        "ELECTRIC",
-        "WATERWORKS",
-        "GAS"
-      ],
-      "depositAmount": "20000000",
-      "rentAmount": "100000",
-      "floor": "FLOOR",
-      "sunlightDirection": "WEST",
-      "leasableArea1": "10",
-      "leasableArea2": 33.1,
-      "pet": "IMPOSSIBLE",
-      "leasableArea": 33.1,
-      "thumbnail": "https://static.zaritalk.com/images/img-default-thumbnail@2x.png",
-      "canceled": false,
-      "id": 1
-    }
-  ]
+  "saveRegisterData": []
 }
