@@ -2,7 +2,6 @@ import React from 'react';
 import { ModalContainer, SaveDataModalBox } from './styles';
 
 const SaveDataModal = ({ saveDataModalIsOpen, onClickNewWrite, onClickSaveDatawWrite }) => {
-    console.log(saveDataModalIsOpen);
 
     if (saveDataModalIsOpen === false) return null;
 
