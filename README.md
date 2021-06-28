@@ -1,5 +1,4 @@
 # react-room
->안녕하세요. 최현욱입니다. 좋은 기회 주셔서 감사드립니다.
 
 1. node_modules 생성 - npm i
 
