@@ -19,9 +19,9 @@ const registerSlice = createSlice({
             state.isLoading = true;
         })
         .addCase(dataPostSave.fulfilled, (state, action) => {
-            if (action.payload !== undefined) {
-                state.registerSaveData = action.payload;
-            }
+            // if (action.payload !== undefined) {
+            //     state.registerSaveData = {...action.payload};
+            // }
             state.isLoading = false;
         })
         .addCase(dataPostSave.rejected, (state, action) => {
