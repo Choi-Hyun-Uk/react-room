@@ -1,5 +1,4 @@
 # react-room
-> 방 목록 페이지, 등록 페이지, 임시저장/불러오기 등 기능 구현
 
 1. node_modules 생성 - npm i
 
